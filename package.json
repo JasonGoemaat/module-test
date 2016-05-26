@@ -12,6 +12,7 @@
   "author": "Jason Goemaat",
   "license": "ISC",
   "devDependencies": {
+    "rxjs": "^5.0.0-beta.6",
     "typescript": "^1.8.10",
     "typings": "^1.0.4"
   }
