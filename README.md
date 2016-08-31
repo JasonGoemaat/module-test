@@ -124,18 +124,18 @@ package:
 
 ### Option 2: using a CDN serving the individual files
 
-Rxjs is [available][npmcdn-rxjs] on npmcdn.  You we can configure the *path*
+Rxjs is [available][unpkg-rxjs] on unpkg.  You we can configure the *path*
 using SystemJS so that anything trying to to go to anything under `rxjs` using
 wildcards will instead go to any other location we want, either on our server
 or on the web. 
 
-  [npmcdn-rxjs]: https://npmcdn.com/rxjs@5.0.0-beta.6
+  [unpkg-rxjs]: https://unpkg.com/rxjs@5.0.0-beta.6
   
-    config.paths['rxjs/*'] = 'https://npmcdn.com/rxjs@5.0.0-beta.6/*';
+    config.paths['rxjs/*'] = 'https://unpkg.com/rxjs@5.0.0-beta.6/*';
 
 This tells SystemJS that any requests in the path starting with `rxjs` should
 get re-routed to the cdn.  Since we import 'rxjs/Rx', this will equate to
-`https://npmcdn.com/rxjs@5.0.0-beta.6/Rx`.  npmcdn displays the 'js' files
+`https://unpkg.com/rxjs@5.0.0-beta.6/Rx`.  unpkg displays the 'js' files
 if there is no extension, what you are actually getting is 'Rx.js' from the
 node module.  Check your network tab in your browser's dev tools to see the
 requests and the actual urls received.  If we *wanted* to we could set
@@ -144,7 +144,7 @@ would be to 'js' files on the cdn.  I'm not sure exactly what the difference
 between setting up a map and packages is, but packages doesn't seem to be
 used with 'paths':
 
-    config.map['rxjs'] = 'https://npmcdn.com/rxjs@5.0.0-beta.6/';
+    config.map['rxjs'] = 'https://unpkg.com/rxjs@5.0.0-beta.6/';
     config.packages['rxjs'] = { defaultExtension: 'js' };
 
 ### Option 3: Script tag
@@ -152,7 +152,7 @@ used with 'paths':
 If we add a script tag for the module bundle, we don't need to configure it
 in SystemJS.  Add the script tag ***AFTER*** the script tag loading SystemJS:
 
-    <script src="https://npmcdn.com/rxjs@5.0.0-beta.6/bundles/Rx.js""></script>
+    <script src="https://unpkg.com/rxjs@5.0.0-beta.6/bundles/Rx.js""></script>
     
 How does SystemJS know to look there when we ask for 'rxjs/Rx'?  If you look
 at the module source, you'll see the path is registered for each of the
@@ -170,7 +170,7 @@ that bundle and runs it, thereby registering all the components inside
 as if it were included in a script tag.  I'm not sure this is the best way
 to do it...
 
-    config.paths['rxjs/*'] = 'https://npmcdn.com/rxjs@5.0.0-beta.6/bundles/*';
+    config.paths['rxjs/*'] = 'https://unpkg.com/rxjs@5.0.0-beta.6/bundles/*';
 
 ### Option 5: SystemJS configured bundle
 
@@ -180,5 +180,5 @@ by the bundle.  All this does is make SystemJS load and execute the bundle
 before requests to any of those modules is made, so the bundle registers 
 it's own components in the correct (we hope) paths.
 
-    //config.bundles['https://npmcdn.com/rxjs@5.0.0-beta.6/bundles/Rx.js'] = ['/rxjs/Rx']; // remote
+    //config.bundles['https://unpkg.com/rxjs@5.0.0-beta.6/bundles/Rx.js'] = ['/rxjs/Rx']; // remote
     config.bundles['lib/rxjs/bundles/Rx.js'] = ['rxjs/*']; // local wildcard
